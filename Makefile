@@ -25,6 +25,8 @@ idler:
 	
 paser:
 	cd src/paser; ${ENVARG} go build ${BUILDARG} -o ../../bin/redis-paser *.go; 
+
+all: remover copyer expirer idler paser
 	
 linux_remover:
 	cd src/remover; ${ENVARG} ${LINUXARG} go build ${BUILDARG} -o ../../lbin/redis-remover *.go;
@@ -40,6 +42,8 @@ linux_idler:
 	
 linux_paser:
 	cd src/paser; ${ENVARG} ${LINUXARG} go build ${BUILDARG} -o ../../lbin/redis-paser *.go;
+
+linux_all: linux_remover linux_copyer linux_expirer linux_idler linux_paser
 
 clean:
 	rm -fr bin/*
