@@ -12,6 +12,7 @@ import (
 	"github.com/marsmay/redis-tools/common"
 )
 
+const BarWidth = 64
 const ScanBatchNum = 500
 
 type Result struct {
@@ -123,7 +124,7 @@ func (i *Idler) Run(noExpire bool) (err error) {
 				processed++
 			}
 
-			common.ProgressBar(processed, total, "scan keys ...")
+			common.ProgressBar(BarWidth, processed, total, "scan keys ...")
 		}
 
 		if cursor == 0 {
