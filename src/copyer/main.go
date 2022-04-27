@@ -1,6 +1,8 @@
 package main
 
 import (
+	_ "embed"
+
 	"flag"
 	"fmt"
 	"log"
@@ -12,36 +14,22 @@ var (
 	sourcePrefix string
 	targetUrl    string
 	targetPrefix string
-	buildTime    string
-	gitHash      string
+
+	buildTime string
+	gitHash   string
+
+	//go:embed usage.txt
+	usage string
 )
 
 func init() {
-	flag.StringVar(&sourceUrl, "su", "redis://127.0.0.1:6379/0", "source redis url, like [redis|rediss]://[:password@]host[:port][/database]")
-	flag.StringVar(&sourcePrefix, "sp", "", "source key prefix, required")
-	flag.StringVar(&targetUrl, "tu", "redis://127.0.0.1:6379/0", "target redis url, like [redis|rediss]://[:password@]host[:port][/database]")
-	flag.StringVar(&targetPrefix, "tp", "", "target key prefix, required")
+	flag.StringVar(&sourceUrl, "su", "redis://127.0.0.1:6379/0", "")
+	flag.StringVar(&sourcePrefix, "sp", "", "")
+	flag.StringVar(&targetUrl, "tu", "redis://127.0.0.1:6379/0", "")
+	flag.StringVar(&targetPrefix, "tp", "", "")
 
 	flag.Usage = func() {
-		fmt.Printf(`redis-copyer version %s, build at %s
-Copyright (C) 2015-2021 by Zivn.
-Web site: https://may.ltd/
-
-redis-copyer can copy the keys of the specified prefix from one redis instance to another redis instance.
-
-Usage: redis-copyer [-su url] -sp prefix [-tu url] -tp prefix
-
-Supported redis URLs are in any of these formats:
-  redis://[:PASSWORD@]HOST[:PORT][/DATABASE]
-  rediss://[:PASSWORD@]HOST[:PORT][/DATABASE]
-
-Options
-  -su	source redis url (default: redis://127.0.0.1:6379/0)
-  -sp	source key prefix 
-  -tu 	target redis url (default: redis://127.0.0.1:6379/0)
-  -tp   target key prefix
-
-`, gitHash, buildTime)
+		fmt.Printf(usage, gitHash, buildTime)
 	}
 }
 

@@ -48,7 +48,7 @@ func (i *Idler) calcNode(node *common.Node, name string) {
 		}
 
 		if node.Num > 0 {
-			result.idleRatio = math2.Percent(node.Data["idle_num"], node.Num, 2)
+			result.idleRatio = math2.Percent[int64, float64](node.Data["idle_num"], node.Num, 2)
 			result.ttl = node.Data["ttl"] / node.Num
 		}
 

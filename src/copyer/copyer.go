@@ -130,7 +130,7 @@ func (c *Copyer) copySet(sourceKey, targetKey string, ttl time.Duration) (ok boo
 	)
 
 	for {
-		values, cursor, err = c.sourceClient.SScan(sourceKey, cursor, "*", math2.MinInt64(length, ScanBatchNum)).Result()
+		values, cursor, err = c.sourceClient.SScan(sourceKey, cursor, "*", math2.Min(length, ScanBatchNum)).Result()
 
 		if err != nil {
 			return
@@ -221,7 +221,7 @@ func (c *Copyer) copyHash(sourceKey, targetKey string, ttl time.Duration) (ok bo
 	)
 
 	for {
-		values, cursor, err = c.sourceClient.HScan(sourceKey, cursor, "*", math2.MinInt64(length, ScanBatchNum)).Result()
+		values, cursor, err = c.sourceClient.HScan(sourceKey, cursor, "*", math2.Min(length, ScanBatchNum)).Result()
 
 		if err != nil {
 			return

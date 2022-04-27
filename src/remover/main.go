@@ -1,6 +1,8 @@
 package main
 
 import (
+	_ "embed"
+
 	"flag"
 	"fmt"
 	"log"
@@ -17,34 +19,21 @@ var (
 	redisUrl   string
 	keyPrefixs flag2.Strings
 	limit      int
-	buildTime  string
-	gitHash    string
+
+	buildTime string
+	gitHash   string
+
+	//go:embed usage.txt
+	usage string
 )
 
 func init() {
-	flag.StringVar(&redisUrl, "u", "redis://127.0.0.1:6379/0", "redis url, like [redis|rediss]://[:password@]host[:port][/database]")
-	flag.Var(&keyPrefixs, "p", "key prefix, required, can specify multiple")
-	flag.IntVar(&limit, "l", 0, "processed item limit num (default 0)")
+	flag.StringVar(&redisUrl, "u", "redis://127.0.0.1:6379/0", "")
+	flag.Var(&keyPrefixs, "p", "")
+	flag.IntVar(&limit, "l", 0, "")
 
 	flag.Usage = func() {
-		fmt.Printf(`redis-remover version %s, build at %s
-Copyright (C) 2015-2021 by Zivn.
-Web site: https://may.ltd/
-
-redis-remover can remove the keys of the specified prefix.
-
-Usage: redis-remover [-u url] -p prefix [-p prefix]... [-l limit]
-
-Supported redis URLs are in any of these formats:
-  redis://[:PASSWORD@]HOST[:PORT][/DATABASE]
-  rediss://[:PASSWORD@]HOST[:PORT][/DATABASE]
-
-Options
-  -u	redis url (default: redis://127.0.0.1:6379/0)
-  -p	key prefix, can specify multiple 
-  -l 	maximum number of items to be processed, 0 means no limit (default: 0)
-
-`, gitHash, buildTime)
+		fmt.Printf(usage, gitHash, buildTime)
 	}
 }
 

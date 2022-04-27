@@ -79,7 +79,7 @@ func (p *Paser) getStrInfo(keys []string) (itemNum, itemSize int64) {
 	}
 
 	itemNum = 1
-	itemSize = math2.AvgInt64List(itemNums)
+	itemSize = math2.AvgList(itemNums)
 	return
 }
 
@@ -113,8 +113,8 @@ func (p *Paser) getListInfo(keys []string) (itemNum, itemSize int64) {
 		}
 	}
 
-	itemNum = math2.AvgInt64List(itemNums)
-	itemSize = math2.AvgInt64List(itemSizes)
+	itemNum = math2.AvgList(itemNums)
+	itemSize = math2.AvgList(itemSizes)
 	return
 }
 
@@ -148,8 +148,8 @@ func (p *Paser) getSetInfo(keys []string) (itemNum, itemSize int64) {
 		}
 	}
 
-	itemNum = math2.AvgInt64List(itemNums)
-	itemSize = math2.AvgInt64List(itemSizes)
+	itemNum = math2.AvgList(itemNums)
+	itemSize = math2.AvgList(itemSizes)
 	return
 }
 
@@ -183,8 +183,8 @@ func (p *Paser) getZSetInfo(keys []string) (itemNum, itemSize int64) {
 		}
 	}
 
-	itemNum = math2.AvgInt64List(itemNums)
-	itemSize = math2.AvgInt64List(itemSizes)
+	itemNum = math2.AvgList(itemNums)
+	itemSize = math2.AvgList(itemSizes)
 	return
 }
 
@@ -233,8 +233,8 @@ func (p *Paser) getHashInfo(keys []string) (itemNum, itemSize int64) {
 		}
 	}
 
-	itemNum = math2.AvgInt64List(itemNums)
-	itemSize = math2.AvgInt64List(itemSizes)
+	itemNum = math2.AvgList(itemNums)
+	itemSize = math2.AvgList(itemSizes)
 	return
 }
 

@@ -1,0 +1,17 @@
+redis-remover version %s, build at %s
+Copyright (C) 2015-2021 by Zivn.
+Web site: https://may.ltd/
+
+redis-remover can remove the keys of the specified prefix.
+
+Usage: redis-remover [-u url] -p prefix [-p prefix]... [-l limit]
+
+Supported redis URLs are in any of these formats:
+  redis://[:PASSWORD@]HOST[:PORT][/DATABASE]
+  rediss://[:PASSWORD@]HOST[:PORT][/DATABASE]
+
+Options
+  -u	redis url (default: redis://127.0.0.1:6379/0)
+  -p	key prefix, can specify multiple
+  -l 	maximum number of items to be processed, 0 means no limit (default: 0)
+

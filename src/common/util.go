@@ -8,7 +8,7 @@ import (
 )
 
 func ProgressBar(width int, done, total int64, description string) {
-	percent := math2.Percent(done, total, 2)
+	percent := math2.Percent[int64, float64](done, total, 2)
 	doneWidth := math2.Min(100, int(percent)) * width / 100
 	fmt.Printf("%6.2f%%|%s%s| %s\r", percent, strings.Repeat("█", doneWidth), strings.Repeat(" ", width-doneWidth), description)
 }

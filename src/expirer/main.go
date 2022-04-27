@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "embed"
 	"flag"
 	"fmt"
 	"log"
@@ -21,38 +22,23 @@ var (
 	keyExpires flag2.Integers
 	limit      int
 	pika       bool
-	buildTime  string
-	gitHash    string
+
+	buildTime string
+	gitHash   string
+
+	//go:embed usage.txt
+	usage string
 )
 
 func init() {
-	flag.StringVar(&redisUrl, "u", "redis://127.0.0.1:6379/0", "redis url, like [redis|rediss]://[:password@]host[:port][/database]")
-	flag.Var(&keyPrefixs, "p", "key prefix, required, can specify multiple")
-	flag.Var(&keyExpires, "e", "key expire seconds, required, can specify multiple, must match prefix")
-	flag.IntVar(&limit, "l", 0, "processed item limit num (default 0)")
-	flag.BoolVar(&pika, "pika", false, "instance is pika (default false)")
+	flag.StringVar(&redisUrl, "u", "redis://127.0.0.1:6379/0", "")
+	flag.Var(&keyPrefixs, "p", "")
+	flag.Var(&keyExpires, "e", "")
+	flag.IntVar(&limit, "l", 0, "")
+	flag.BoolVar(&pika, "pika", false, "")
 
 	flag.Usage = func() {
-		fmt.Printf(`redis-expirer version %s, build at %s
-Copyright (C) 2015-2021 by Zivn.
-Web site: https://may.ltd/
-
-redis-expirer can set the specified prefix key's expiration to specified seconds.
-
-Usage: redis-expirer [-u url] -p prefix [-p prefix]... -e expire [-e expire]... [-l limit] [-pika] 
-
-Supported redis URLs are in any of these formats:
-  redis://[:PASSWORD@]HOST[:PORT][/DATABASE]
-  rediss://[:PASSWORD@]HOST[:PORT][/DATABASE]
-
-Options
-  -u	 redis url (default: redis://127.0.0.1:6379/0)
-  -p	 key prefix, can specify multiple 
-  -e	 key expire seconds, can specify multiple, must match prefix 
-  -l 	 maximum number of items to be processed, 0 means no limit (default: 0)
-  -pika  instance is pika (default: false)
-
-`, gitHash, buildTime)
+		fmt.Printf(usage, gitHash, buildTime)
 	}
 }
 

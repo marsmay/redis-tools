@@ -1,6 +1,8 @@
 package main
 
 import (
+	_ "embed"
+
 	"flag"
 	"fmt"
 	"log"
@@ -15,42 +17,25 @@ var (
 	mergeLen    int
 	noExpire    bool
 	output      string
-	buildTime   string
-	gitHash     string
+
+	buildTime string
+	gitHash   string
+
+	//go:embed usage.txt
+	usage string
 )
 
 func init() {
-	flag.StringVar(&redisUrl, "u", "redis://127.0.0.1:6379/0", "redis url, like [redis|rediss]://[:password@]host[:port][/database]")
-	flag.StringVar(&separator, "s", "", "key separator, required")
-	flag.Int64Var(&idleSeconds, "i", 86400*7, "key idle seconds")
-	flag.IntVar(&keysLen, "sn", 10, "number of key samples")
-	flag.IntVar(&mergeLen, "mn", 20, "number of merge key nodes")
-	flag.BoolVar(&noExpire, "n", false, "only check no expire keys")
-	flag.StringVar(&output, "o", "./", "output csv report file path")
+	flag.StringVar(&redisUrl, "u", "redis://127.0.0.1:6379/0", "")
+	flag.StringVar(&separator, "s", "", "")
+	flag.Int64Var(&idleSeconds, "i", 86400*7, "")
+	flag.IntVar(&keysLen, "sn", 10, "")
+	flag.IntVar(&mergeLen, "mn", 20, "")
+	flag.BoolVar(&noExpire, "n", false, "")
+	flag.StringVar(&output, "o", "./", "")
 
 	flag.Usage = func() {
-		fmt.Printf(`redis-idler version %s, build at %s
-Copyright (C) 2015-2021 by Zivn.
-Web site: https://may.ltd/
-
-redis-idler can analyze the idle statistics of all keys in the redis instance and generate a csv report.
-
-Usage: redis-idler [-u url] -s separator [-i idle_seconds] [-sn sample_num] [-mn merge_num] [-n] [-o ouput_dir]
-
-Supported redis URLs are in any of these formats:
-  redis://[:PASSWORD@]HOST[:PORT][/DATABASE]
-  rediss://[:PASSWORD@]HOST[:PORT][/DATABASE]
-
-Options
-  -u	redis url (default: redis://127.0.0.1:6379/0)
-  -s	key separator
-  -i 	number of seconds the key is idle (default: 604800)
-  -sn	sample size of keys (default: 10)
-  -mn	number of keys for merge key classification (default: 20)
-  -n	only check keys without expiration (default: false) 
-  -o	directory to save the csv report (default: "./")
-
-`, gitHash, buildTime)
+		fmt.Printf(usage, gitHash, buildTime)
 	}
 }
 
